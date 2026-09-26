@@ -49,8 +49,8 @@ app = FastAPI(
 # konfigurasi cors
 ALLOWED_ORIGINS = [
     "http://localhost:5173",
-    "http://localhost:3000",
-    "https://siclus-frontend.vercel.app",
+    "http://localhost:8000",
+    "https://siclus-dishub-mojokerto.vercel.app",
     "https://siclus.vercel.app",
 ]
 
