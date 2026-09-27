@@ -373,7 +373,7 @@ def get_all_admin_staff():
         for u in (res.data or []):
             raw_id = str(u.get("id", "")).strip().upper()
             raw_email = str(u.get("email", "")).strip().lower()
-            is_master = raw_id in ["DSHB-ADM-01", "ADM001", "ADM-MASTER"] or raw_email == "admin@siclus.id"
+            is_master = raw_id in ["DSHB-ADM-01", "ADM001", "ADM-MASTER"] or raw_email in ["admin@siclus.id", "admin_angkutan@siclus.id", "admin.angkutan@siclus.id"]
             staff_list.append({
                 "id": "DSHB-ADM-01" if is_master else u.get("id"),
                 "raw_id": u.get("id"),
@@ -526,7 +526,7 @@ def delete_admin_staff(
         )
 
     target_user = target_res.data[0]
-    if str(target_user.get("email", "")).lower() == "admin@siclus.id":
+    if str(target_user.get("email", "")).lower() in ["admin@siclus.id", "admin_angkutan@siclus.id", "admin.angkutan@siclus.id"]:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Tindakan ditolak. Akun Administrator Utama terproteksi dan tidak dapat dihapus.",
@@ -586,7 +586,7 @@ def update_admin_staff(
         )
 
     target_user = target_res.data[0]
-    if str(target_user.get("email", "")).lower() == "admin@siclus.id":
+    if str(target_user.get("email", "")).lower() in ["admin@siclus.id", "admin_angkutan@siclus.id", "admin.angkutan@siclus.id"]:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Tindakan ditolak. Akun Administrator Utama dikelola melalui menu Profil Pribadi.",

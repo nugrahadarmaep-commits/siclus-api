@@ -6,6 +6,7 @@ from app.db.database import supabase
 
 security = HTTPBearer()
 
+
 def verifikasi_admin(
     credentials: HTTPAuthorizationCredentials = Depends(security),
 ) -> str:
@@ -62,7 +63,8 @@ def verifikasi_master_admin(
     email_admin: str = Depends(verifikasi_admin),
 ) -> str:
     """Verifikasi hak akses khusus Administrator Utama"""
-    if (email_admin or "").strip().lower() != "admin@siclus.id":
+    whitelist_master = ["admin@siclus.id", "admin_angkutan@siclus.id", "admin.angkutan@siclus.id"]
+    if (email_admin or "").strip().lower() not in whitelist_master:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Akses ditolak. Fitur kelola staf hanya untuk Administrator Utama.",
@@ -115,4 +117,3 @@ def verifikasi_pengemudi(
 
 # Alias untuk fleksibilitas pemanggilan di rute laporan
 verifikasi_token = verifikasi_pengemudi
-
